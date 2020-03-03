@@ -75,10 +75,10 @@ public class HashTable {
             while( !temp.key.equals(key)) {
                 temp = temp.next;
             }
-            if(temp.prev == null ) {
-                if (temp.next == null){
-                    entries[hash]=null;
-                }else if (temp.next.prev != null){
+            if(temp.prev == null ) {   //compara element únic (no col·lissió)
+                if (temp.next == null){  //esborrar element únic (no col·lissió)
+                    entries[hash]=null; //esborrar element únic (no col·lissió)
+                }else if (temp.next.prev != null){  //esborrem temp, per tant actualitzem l'anterior al següent
                     temp.next.prev = null;
                     entries[hash] = temp.next;
                 }

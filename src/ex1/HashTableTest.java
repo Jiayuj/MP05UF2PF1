@@ -63,19 +63,29 @@ class HashTableTest {
 
     @org.junit.jupiter.api.Test
     void drop() {
-        //
+        // añadir los valores.
         ht.put("1","qq");
+        ht.put("34","qq");
         ht.put("56","11");
         ht.put("78","qq");
         ht.put("100","qq");
-
+        // eleminar primer valor.
         ht.drop("1");
+        Assertions.assertEquals("\n bucket[1] = [34, qq] -> [56, 11] -> [78, qq] -> [100, qq]", ht.toString());
+        // eleminar ultima valor.
+        ht.drop("100");
+        Assertions.assertEquals("\n bucket[1] = [34, qq] -> [56, 11] -> [78, qq]", ht.toString());
+        // eleminar medio valor.
         ht.drop("56");
+        Assertions.assertEquals("\n bucket[1] = [34, qq] -> [78, qq]", ht.toString());
+        // eleminar valor no exiter
+        ht.drop("55");
+        Assertions.assertEquals("\n bucket[1] = [34, qq] -> [78, qq]", ht.toString());
+        ht.drop("qwe");
+        Assertions.assertEquals("\n bucket[1] = [34, qq] -> [78, qq]", ht.toString());
+        // eleminar valor null
+        ht.drop("");
+        Assertions.assertEquals("\n bucket[1] = [34, qq] -> [78, qq]", ht.toString());
 
-
-
-
-
-        Assertions.assertEquals("", ht.toString());
     }
 }

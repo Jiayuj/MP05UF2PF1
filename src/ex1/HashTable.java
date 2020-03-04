@@ -24,7 +24,7 @@ public class HashTable {
         // si posisicion de hash esta null se añader.
         if(entries[hash] == null) {
             entries[hash] = hashEntry;
-            size++;
+            size++;      //size
         }
         else {
             // si posisicion tiene valor se compara key si es misma se replasar valor, si no añader a siguede.
@@ -46,6 +46,7 @@ public class HashTable {
                 if (hashEntry.key != null) {
                     temp.next = hashEntry;
                     hashEntry.prev = temp;
+                    size++; //size
                 }
             }
         }
@@ -60,8 +61,12 @@ public class HashTable {
             HashEntry temp = entries[hash];
 
             while( !temp.key.equals(key))
-                temp = temp.next;
-
+                //si siguete es null significar corrido todas valor y no hay key,  se retorna vacio.
+                if (temp.next!=null){
+                    temp = temp.next;
+                }else {
+                    return null;
+                }
             return temp.value;
         }
 
@@ -78,14 +83,17 @@ public class HashTable {
             if(temp.prev == null ) {   //compara element únic (no col·lissió)
                 if (temp.next == null){  //esborrar element únic (no col·lissió)
                     entries[hash]=null; //esborrar element únic (no col·lissió)
+                    size--;// size
                 }else if (temp.next.prev != null){  //esborrem temp, per tant actualitzem l'anterior al següent
                     temp.next.prev = null;
                     entries[hash] = temp.next;
+                    size--; //size
                 }
             }
             else{
                 if(temp.next != null) temp.next.prev = temp.prev;   //esborrem temp, per tant actualitzem l'anterior al següent
                 temp.prev.next = temp.next;                         //esborrem temp, per tant actualitzem el següent de l'anterior
+                size--;// size
             }
         }
     }

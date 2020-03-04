@@ -1,23 +1,38 @@
-package ex1;
+package ex4;
 
 // Original source code: https://gist.github.com/amadamala/3cdd53cb5a6b1c1df540981ab0245479
 // Modified by Fernando Porrino Serrano for academic purposes.
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class HashTable {
     private int INITIAL_SIZE = 16;
     private int size = 0;
     private HashEntry[] entries = new HashEntry[INITIAL_SIZE];
 
+    /**
+     * @return totas cantitat de valor que hay en hashtable
+     */
     public int size(){
         return this.size;
     }
 
+    /**
+     * @return size real es 16 no cambia
+     */
     public int realSize(){
         return this.INITIAL_SIZE;
     }
 
+    /**
+     * añadir valor en hashtable la posicio de hash.
+     * si key es misma se sobre escribir valor
+     * @param key id que quere añadir
+     * @param value datos
+     */
     public void put(String key, String value) {
         int hash = getHash(key);
         final HashEntry hashEntry = new HashEntry(key, value);
@@ -26,15 +41,6 @@ public class HashTable {
             entries[hash] = hashEntry;
             size++;      //size aumentar
         } else {
-
-//            HashEntry temp = entries[hash];
-//            while(temp.next != null)  <- no compara primera valor.
-//                temp = temp.next;     <- no compara si tiene mismo key
-//
-//            temp.next = hashEntry;    <- si o si se añader a final
-//            hashEntry.prev = temp;
-
-
             //si hay valor se comprobar si es mismo key se sobre esscribe o añadir a final.
             HashEntry temp = entries[hash];
             //crear un variabel a para salir de bucle.
@@ -47,7 +53,6 @@ public class HashTable {
                 }else if (temp.next == null){  //si no hay mas añader a final
                     temp.next = hashEntry;
                     hashEntry.prev = temp;
-                    size++; // aumentar size
                     exit=true;
                 }else {
                     temp = temp.next;
@@ -56,16 +61,15 @@ public class HashTable {
         }
     }
 
+
     /**
-     * Returns 'null' if the element is not found.
+     * @param key id
+     * @return Returns 'null' if the element is not found. si hay retorna valor.
      */
     public String get(String key) {
         int hash = getHash(key);
         if(entries[hash] != null) {
             HashEntry temp = entries[hash];
-
-//            while( !temp.key.equals(key))
-//                temp = temp.next;   <- falta comprobar si next es null.
 
             while( !temp.key.equals(key))
                 //si siguete es null significar corrido todas valor y no hay key,  se retorna vacio.
@@ -80,26 +84,22 @@ public class HashTable {
         return null;
     }
 
+    /**
+     * eleminar valor que tiene misma id en hashtable
+     * @param key id
+     */
     public void drop(String key) {
         int hash = getHash(key);
         if(entries[hash] != null) {
-
             HashEntry temp = entries[hash];
             while( !temp.key.equals(key)) {
                 temp = temp.next;
             }
-
-//            if(temp.prev == null) entries[hash] = null; <- falta comprobar si unic o no             //esborrar element únic (no col·lissió)
-//            else{
-//                if(temp.next != null) temp.next.prev = temp.prev;   //esborrem temp, per tant actualitzem l'anterior al següent
-//                temp.prev.next = temp.next;                         //esborrem temp, per tant actualitzem el següent de l'anterior
-//            }
-
             if(temp.prev == null ) {   //compara element únic (no col·lissió)
-               if (temp.next == null){  //esborrar element únic (no col·lissió)
+                if (temp.next == null){  //esborrar element únic (no col·lissió)
                     entries[hash]=null; //esborrar element únic (no col·lissió)
                     size--;// size
-                }else if (temp.next.prev != null){  //esborrem temp (no unic, posicion inicir), per tant actualitzem el següent no relaciona con temp
+                }else if (temp.next.prev != null){  //esborrem temp, per tant actualitzem l'anterior al següent
                     temp.next.prev = null;
                     entries[hash] = temp.next;
                     size--; //size
@@ -113,12 +113,19 @@ public class HashTable {
         }
     }
 
+    /**
+     * @param key id
+     * @return posicion que tiene calculado en hash
+     */
     private int getHash(String key) {
         // piggy backing on java string
         // hashcode implementation.
         return key.hashCode() % INITIAL_SIZE;
     }
 
+    /**
+     * model de formar de guardar en hashtable
+     */
     private class HashEntry {
         String key;
         String value;
@@ -140,6 +147,9 @@ public class HashTable {
         }
     }
 
+    /**
+     * @return pasar a String que pueden muestra
+     */
     @Override
     public String toString() {
         int bucket = 0;

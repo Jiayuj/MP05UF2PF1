@@ -1,8 +1,6 @@
-package ex1;
+package ex2;
 
 import org.junit.jupiter.api.Assertions;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class HashTableTest {
 
@@ -68,8 +66,6 @@ class HashTableTest {
         ht.put("57","qq57");
         ht.put("79","qq79");
         ht.put("101","qq101");
-        Assertions.assertEquals(16, ht.realSize());
-        //eleminar volor
         ht.drop("1");
         ht.drop("100");
         ht.drop("56");
@@ -77,7 +73,9 @@ class HashTableTest {
         ht.drop("2");
         ht.drop("101");
         ht.drop("55");
-        Assertions.assertEquals(16, ht.realSize());
+
+        System.out.println(ht.realSize());
+
     }
 
     @org.junit.jupiter.api.Test
@@ -93,41 +91,17 @@ class HashTableTest {
         ht.put("23","qq");
         ht.put("45","qq");
         Assertions.assertEquals("\n bucket[0] = [0, q1q] -> [22, qq1]"
-                + "\n bucket[1] = [1, qq] -> [23, qq] -> [45, qq]", ht.toString());
+                                        + "\n bucket[1] = [1, qq] -> [23, qq] -> [45, qq]", ht.toString());
         //sobre escribir valor de posicion inicio
         ht.put("1","qq1");
         Assertions.assertEquals("\n bucket[0] = [0, q1q] -> [22, qq1]"
-                + "\n bucket[1] = [1, qq1] -> [23, qq] -> [45, qq]", ht.toString());
-        //sobre escribir valor de posicion medio
+                                        + "\n bucket[1] = [1, qq1] -> [23, qq] -> [45, qq]", ht.toString());
         ht.put("23","qq1");
         Assertions.assertEquals("\n bucket[0] = [0, q1q] -> [22, qq1]"
-                + "\n bucket[1] = [1, qq1] -> [23, qq1] -> [45, qq]", ht.toString());
-        //sobre escribir valor de posicion final
+                                        + "\n bucket[1] = [1, qq1] -> [23, qq1] -> [45, qq]", ht.toString());
         ht.put("45","qq1");
         Assertions.assertEquals("\n bucket[0] = [0, q1q] -> [22, qq1]"
-                + "\n bucket[1] = [1, qq1] -> [23, qq1] -> [45, qq1]", ht.toString());
-        //add vacio
-        ht.put("","");
-        Assertions.assertEquals("\n bucket[0] = [0, q1q] -> [22, qq1] -> [, ]"
                                         + "\n bucket[1] = [1, qq1] -> [23, qq1] -> [45, qq1]", ht.toString());
-        //add lletra
-        ht.put("qwe","qwe");
-        Assertions.assertEquals("\n bucket[0] = [0, q1q] -> [22, qq1] -> [, ]"
-                                        + "\n bucket[1] = [1, qq1] -> [23, qq1] -> [45, qq1]"
-                                        + "\n bucket[15] = [qwe, qwe]", ht.toString());
-        //motificar lletra y vacio
-        ht.put("qwe","123");
-        ht.put("","123");
-        Assertions.assertEquals("\n bucket[0] = [0, q1q] -> [22, qq1] -> [, 123]"
-                                        + "\n bucket[1] = [1, qq1] -> [23, qq1] -> [45, qq1]"
-                                        + "\n bucket[15] = [qwe, 123]", ht.toString());
-        //com simbolo
-        ht.put("[]']","123");
-        Assertions.assertEquals("\n bucket[0] = [0, q1q] -> [22, qq1] -> [, 123]"
-                                        + "\n bucket[1] = [1, qq1] -> [23, qq1] -> [45, qq1]"
-                                        + "\n bucket[8] = [[]'], 123]"
-                                        + "\n bucket[15] = [qwe, 123]", ht.toString());
-
     }
 
     @org.junit.jupiter.api.Test
